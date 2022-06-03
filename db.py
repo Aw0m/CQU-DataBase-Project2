@@ -94,7 +94,7 @@ class Database:
         try:
             table = self.wb.sheets[table_name]
         except:
-            print("select: 没有该表")
+            print("update: 没有该表")
             return
 
         if not self.check_field(table_name, field):
@@ -112,13 +112,39 @@ class Database:
                         break
                     table.range(self.field_col[i] + str(row)).value = field[i]
                 self.wb.save()
-                print("select: 已更新")
+                print("update: 已更新")
                 return
             elif pr_key < x:
                 row = row * 2
             else:
                 row = row * 2 + 1
 
+    def delete(self, table_name: str, pr_key) -> None:
+        try:
+            table = self.wb.sheets[table_name]
+        except:
+            print("delete: 没有该表")
+            return
+
+        row = 1
+        while True:
+            x = table.range('B' + str(row)).value
+            if x is None:
+                print("delete: 没有相应的pr_key")
+                return
+            if x == pr_key:
+                for i in range(len(self.field_col)):
+                    if table.range(self.field_col[i] + str(row)).value is None:
+                        break
+                    table.range(self.field_col[i] + str(row)).value = None
+                table.range('B' + str(row)).value = None
+                self.wb.save()
+                print("delete: 已更新")
+                return
+            elif pr_key < x:
+                row = row * 2
+            else:
+                row = row * 2 + 1
     def close(self):
         self.wb.save()
         self.wb.close()

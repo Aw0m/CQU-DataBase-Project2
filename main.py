@@ -2,34 +2,28 @@ from db import Database
 
 if __name__ == '__main__':
     # 创建/选择数据库 如果没有该数据库则直接创建
-    db = Database("db4")
+    db = Database("db_test")
 
     # 创建表
-    db.create_table(table_name="new_table1", pr_key="t1_pr", field=['col1', 'col2', 'col3'])
-
-    # 插入（错误！因为字段数量不匹配）
-    db.insert(table_name="new_table1", pr_key=71, field=["123", '423', '12321', 123])
+    db.create_table(table_name="Employee", pr_key="E_id", field=['E_name', 'E_number', 'E_sex', 'E_tel'])
 
     # 插入
-    db.insert(table_name="new_table1", pr_key=71, field=["123", '423', '12321'])
-
-    # 失败，因为已经有相同pr_key的已经插入
-    db.insert(table_name="new_table1", pr_key=71, field=["123", '423', '12321'])
+    db.insert(table_name="Employee", pr_key=10000, field=["张三", '22', 'male', 15266668888])
 
     # 查找（找到了）
-    print(db.select(table_name="new_table1", pr_key=71))
-
-    # 更新（错误！因为字段数量不匹配）
-    db.update(table_name="new_table1", pr_key=71, field=[1, 1, 1, 4])
+    print(db.select(table_name="Employee", pr_key=10000))
 
     # 更新
-    db.update(table_name="new_table1", pr_key=71, field=[1, 1, 1])
+    db.update(table_name="Employee", pr_key=10000, field=["张三", '23', 'male', 15266668888])
 
-    # 查找
-    print(db.select(table_name="new_table1", pr_key=71))
+    # 查找（找到了）
+    print(db.select(table_name="Employee", pr_key=10000))
 
-    # 查找 （没找到）
-    print(db.select(table_name="new_table1", pr_key=12371))
+    # 删除
+    db.delete(table_name="Employee", pr_key=10000)
+
+    # 查找（找不到了）
+    print(db.select(table_name="Employee", pr_key=10000))
 
     db.close()
 
