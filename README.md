@@ -1,4 +1,4 @@
-# dbProject2
+# CQU-DataBase-Project2
 重庆大学计算机学院-数据库project2项目2.通过excel简单实现一个数据库
 
 通过`Database`类实现对excel数据库的操作。
